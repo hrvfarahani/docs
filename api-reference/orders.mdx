@@ -1,0 +1,109 @@
+---
+title: "سفارش‌ها در API فروشندگان دیجی‌کالا: فهرست، جزئیات و لغو"
+sidebarTitle: "سفارش‌ها"
+description: "اندپوینت‌های سفارش در API فروشندگان دیجی‌کالا برای دریافت فهرست سفارش‌ها با فیلتر، مشاهده جزئیات یک آیتم سفارش و لغو سفارش با کد دلیل مشخص."
+---
+
+با اندپوینت‌های سفارش در API فروشندگان دیجی‌کالا می‌توانید سفارش‌های فروشگاه خود را فهرست کنید، جزئیات هر آیتم سفارش را ببینید و در صورت نیاز آن را لغو کنید. همه درخواست‌ها به [احراز هویت](/authentication) نیاز دارند.
+
+## فهرست سفارش‌ها
+
+```http
+GET https://seller.digikala.com/api/v1/orders/
+```
+
+فهرست سفارش‌های فروشنده را برمی‌گرداند. همه پارامترهای جستجو اختیاری هستند.
+
+<ParamField query="search[order_ids]" type="string">
+  فهرست شناسه آیتم‌های سفارش، جداشده با کاما.
+</ParamField>
+
+<ParamField query="search[variant_ids]" type="string">
+  فهرست شناسه تنوع‌ها، جداشده با کاما.
+</ParamField>
+
+<ParamField query="search[shipping_type]" type="string">
+  نوع ارسال. یکی از مقادیر `digikala`، `seller` یا `both`.
+</ParamField>
+
+<ParamField query="search[product_id]" type="integer">
+  شناسه کالا.
+</ParamField>
+
+<ParamField query="search[category_id]" type="integer">
+  شناسه دسته‌بندی.
+</ParamField>
+
+<ParamField query="search[supplier_code]" type="string">
+  کد تأمین‌کننده.
+</ParamField>
+
+<ParamField query="search[shipping_nature_ids]" type="string">
+  فهرست شناسه‌های ماهیت ارسال، جداشده با کاما.
+</ParamField>
+
+<ParamField query="search[order_status]" type="string">
+  وضعیت سفارش. یکی از مقادیر `confirmed`، `warehouse` یا `warehouse_processing`.
+</ParamField>
+
+```bash
+curl -G "https://seller.digikala.com/api/v1/orders/" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  --data-urlencode "search[order_status]=confirmed" \
+  --data-urlencode "search[shipping_type]=seller"
+```
+
+## مشاهده یک سفارش
+
+```http
+GET https://seller.digikala.com/api/v1/orders/{order_item_id}/
+```
+
+جزئیات کامل یک آیتم سفارش را برمی‌گرداند.
+
+<ParamField path="order_item_id" type="integer" required>
+  شناسه آیتم سفارش.
+</ParamField>
+
+```bash
+curl "https://seller.digikala.com/api/v1/orders/ORDER_ITEM_ID/" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+## لغو سفارش
+
+```http
+DELETE https://seller.digikala.com/api/v1/orders/{order_item_id}/
+```
+
+یک آیتم سفارش را لغو می‌کند.
+
+<ParamField path="order_item_id" type="integer" required>
+  شناسه آیتم سفارش.
+</ParamField>
+
+<ParamField body="count" type="integer" required>
+  تعداد واحدهایی که لغو می‌شوند.
+</ParamField>
+
+<ParamField body="reason_id" type="integer" required>
+  کد دلیل لغو:
+
+  | کد | دلیل |
+  | --- | --- |
+  | `18` | ناموجود بودن کالا نزد فروشنده |
+  | `30` | قیمت‌گذاری اشتباه |
+  | `39` | تعلیق فروشنده |
+  | `54` | ناموجود بودن بخشی از کالا |
+</ParamField>
+
+```bash
+curl -X DELETE "https://seller.digikala.com/api/v1/orders/ORDER_ITEM_ID/" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"count": 1, "reason_id": 18}'
+```
+
+<Warning>
+  لغو سفارش ممکن است روی عملکرد فروشنده شما در دیجی‌کالا اثر بگذارد. پیش از لغو، دلیل صحیح را انتخاب کنید.
+</Warning>

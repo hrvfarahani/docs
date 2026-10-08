@@ -1,47 +1,40 @@
 ---
-title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+title: "شروع سریع با API فروشندگان دیجی‌کالا در سه مرحله ساده"
+sidebarTitle: "شروع سریع"
+description: "در این راهنما یاد می‌گیرید کلید API را در پنل فروشندگان دیجی‌کالا بسازید، پروفایل خود را بخوانید و فهرست سفارش‌های تأییدشده را دریافت کنید."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
-
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
-
-## Prerequisites
-
-Before you begin, you must have:
-
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
-
-## Get started
+برای کار با API فروشندگان دیجی‌کالا به یک حساب فروشندگی فعال و یک کلید API نیاز دارید. در این راهنما با دو درخواست، اتصال را آزمایش می‌کنید و سفارش‌هایتان را دریافت می‌کنید.
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="ساخت کلید API">
+    کلید خود را مطابق [راهنمای احراز هویت](/authentication) از پنل فروشندگان بسازید.
+  </Step>
+  <Step title="آزمایش اتصال">
+    پروفایل فروشنده را بخوانید. پاسخ موفق یعنی کلید شما درست کار می‌کند:
 
     ```bash
-    npm install your-package
+    curl "https://seller.digikala.com/api/v1/profile/" \
+      -H "Authorization: Bearer YOUR_API_KEY"
     ```
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
+  <Step title="دریافت سفارش‌ها">
+    سفارش‌های تأییدشده را دریافت کنید:
 
     ```bash
-    your-cli init
-    ```
-  </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
-
-    ```bash
-    your-cli start
+    curl -G "https://seller.digikala.com/api/v1/orders/" \
+      -H "Authorization: Bearer YOUR_API_KEY" \
+      --data-urlencode "search[order_status]=confirmed"
     ```
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+<CardGroup cols={2}>
+  <Card title="سفارش‌ها" icon="cart-shopping" href="/api-reference/orders">
+    فهرست، جزئیات و لغو سفارش.
+  </Card>
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
-</Tip>
+  <Card title="تنوع‌ها" icon="tags" href="/api-reference/variants">
+    به‌روزرسانی قیمت و موجودی.
+  </Card>
+</CardGroup>

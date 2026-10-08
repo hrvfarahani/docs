@@ -1,0 +1,47 @@
+---
+title: "API گلدن سیستمز: استعلام گارانتی و اطلاعات سریال کالا"
+sidebarTitle: "معرفی و احراز هویت"
+description: "با API گلدن سیستمز ابتدا کلید احراز هویت بسازید و سپس با شماره فاکتور، شماره سریال و تاریخ گارانتی، اطلاعات رسید و گارانتی کالا را به‌صورت XML دریافت کنید."
+---
+
+API گلدن سیستمز (Golden Systems) دو سرویس ارائه می‌دهد: ساخت کلید احراز هویت و استخراج اطلاعات رسید و گارانتی کالا با خروجی XML. در این صفحه آدرس پایه، روند احراز هویت و ترتیب فراخوانی سرویس‌ها را می‌بینید.
+
+## آدرس پایه
+
+```text
+https://x3.gse.ae:5005
+```
+
+## روند کلی
+
+<Steps>
+  <Step title="ساخت کلید">
+    سرویس [Generate Key](/golden-systems/generate-key) را با کلید `random_key` و مقدار خالی فراخوانی کنید تا رمز (پسورد) دریافت کنید.
+  </Step>
+  <Step title="استخراج داده">
+    رمز دریافتی را بدون هیچ تغییری به‌عنوان مقدار کلید `AuthKey` در فراخوانی [Export to XML](/golden-systems/export-to-xml) ارسال کنید.
+  </Step>
+</Steps>
+
+## احراز هویت
+
+نوع احراز هویت در هر دو سرویس **API Key** است.
+
+| سرویس | نوع احراز هویت | کلید (Key) | مقدار (Password) |
+| --- | --- | --- | --- |
+| `GET /generate_key` | API Key | `random_key` | خالی |
+| `GET /export_to_xml` | API Key | `AuthKey` | رمز دریافتی از مرحله ۱، بدون تغییر |
+
+<Note>
+  در فراخوانی `generate_key` مقدار رمز باید خالی بماند، چون هدف این فراخوانی ساخت رمز است.
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="ساخت کلید" icon="key" href="/golden-systems/generate-key">
+    دریافت رمز برای احراز هویت
+  </Card>
+
+  <Card title="استخراج داده" icon="file-code" href="/golden-systems/export-to-xml">
+    دریافت اطلاعات گارانتی به‌صورت XML
+  </Card>
+</CardGroup>

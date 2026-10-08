@@ -1,0 +1,126 @@
+---
+title: "GET /export_to_xml: استخراج اطلاعات گارانتی و رسید کالا"
+sidebarTitle: "GET /export_to_xml"
+description: "GET /export_to_xml اطلاعات رسید و گارانتی کالا را با پارامترهای Warranty، SalesInvoiceNo و SerialNo برمی‌گرداند. پاسخ شامل کد کالا، سریال و تاریخ گارانتی است."
+---
+
+سرویس `export_to_xml` در API گلدن سیستمز اطلاعات رسید، فاکتور فروش و گارانتی یک کالا را بر اساس تاریخ گارانتی، شماره فاکتور فروش و شماره سریال، در قالب XML برمی‌گرداند. پیش از فراخوانی، با [Generate Key](/golden-systems/generate-key) رمز بسازید.
+
+## درخواست
+
+| مورد | مقدار |
+| --- | --- |
+| آدرس پایه | `https://x3.gse.ae:5005` |
+| مسیر | `/export_to_xml` |
+| متد | `GET` |
+| بدنه (Body) | `{}` |
+
+## احراز هویت
+
+| نوع احراز هویت | کلید (Key) | مقدار (Password) |
+| --- | --- | --- |
+| API Key | `AuthKey` | رمز دریافتی از `generate_key`، بدون تغییر |
+
+## پارامترها
+
+<ParamField query="Warranty" type="string">
+  تاریخ گارانتی در قالب `MM/DD/YYYY` و داخل علامت نقل‌قول تکی. مثال: `'07/24/2026'`
+</ParamField>
+
+<ParamField query="SalesInvoiceNo" type="string">
+  شماره فاکتور فروش داخل علامت نقل‌قول تکی. مثال: `'AVASSINV23000077'`
+</ParamField>
+
+<ParamField query="SerialNo" type="string">
+  شماره سریال کالا داخل علامت نقل‌قول تکی. مثال: `'SN232850065549'`
+</ParamField>
+
+```text مثال
+https://x3.gse.ae:5005/export_to_xml?Warranty='07/24/2026'&SalesInvoiceNo='AVASSINV23000077'&SerialNo='SN232850065549'
+```
+
+## پاسخ
+
+```xml نمونه پاسخ
+<data>
+  <row>
+    <Site>AVAS</Site>
+    <Receipt_No.>AVASSD230800067</Receipt_No.>
+    <BP_Code>FANAVARAN AVASYS </BP_Code>
+    <Item_Code>H510M-H-V2</Item_Code>
+    <Item_Description>GIGABYTE M/B H510M H V2</Item_Description>
+    <Serial_No.>SN232850065549</Serial_No.>
+    <Receipt_Date>2023-08-23 00:00:00</Receipt_Date>
+    <Warranty>2026-07-24 00:00:00</Warranty>
+    <Reference_No.>INU-N70318</Reference_No.>
+    <Dt>2023-07-24 00:00:00</Dt>
+    <Sales_Invoice_No.>AVASSINV23000077</Sales_Invoice_No.>
+    <Supplier>RP000008</Supplier>
+    <Type>2</Type>
+    <Cart> </Cart>
+    <Installed>2</Installed>
+  </row>
+</data>
+```
+
+### فیلدهای پاسخ
+
+<ResponseField name="Site" type="string">
+  سایت. مثال: `AVAS`
+</ResponseField>
+
+<ResponseField name="Receipt_No." type="string">
+  شماره رسید.
+</ResponseField>
+
+<ResponseField name="BP_Code" type="string">
+  کد طرف تجاری (Business Partner).
+</ResponseField>
+
+<ResponseField name="Item_Code" type="string">
+  کد کالا.
+</ResponseField>
+
+<ResponseField name="Item_Description" type="string">
+  شرح کالا.
+</ResponseField>
+
+<ResponseField name="Serial_No." type="string">
+  شماره سریال کالا.
+</ResponseField>
+
+<ResponseField name="Receipt_Date" type="datetime">
+  تاریخ رسید.
+</ResponseField>
+
+<ResponseField name="Warranty" type="datetime">
+  تاریخ پایان گارانتی.
+</ResponseField>
+
+<ResponseField name="Reference_No." type="string">
+  شماره مرجع.
+</ResponseField>
+
+<ResponseField name="Dt" type="datetime">
+  تاریخ. مثال: `2023-07-24 00:00:00`
+</ResponseField>
+
+<ResponseField name="Sales_Invoice_No." type="string">
+  شماره فاکتور فروش.
+</ResponseField>
+
+<ResponseField name="Supplier" type="string">
+  کد تأمین‌کننده.
+</ResponseField>
+
+<ResponseField name="Type" type="string">
+  نوع. مثال: `2`
+</ResponseField>
+
+<ResponseField name="Cart" type="string">
+  سبد. در نمونه خالی است.
+</ResponseField>
+
+<ResponseField name="Installed" type="string">
+  وضعیت نصب. مثال: `2`
+</ResponseField>

@@ -1,0 +1,40 @@
+---
+title: "مرجع API فروشندگان دیجی‌کالا: آدرس پایه و منابع موجود"
+sidebarTitle: "نمای کلی"
+description: "نمای کلی مرجع API فروشندگان دیجی‌کالا شامل آدرس پایه، قالب پارامترهای جستجو، قالب داده JSON و فهرست منابع سفارش، تنوع و پروفایل فروشنده."
+---
+
+مرجع API فروشندگان دیجی‌کالا اندپوینت‌های سفارش، تنوع کالا و پروفایل فروشنده را پوشش می‌دهد. همه درخواست‌ها به [احراز هویت](/authentication) با کلید API نیاز دارند.
+
+## آدرس پایه
+
+```text
+https://seller.digikala.com/api/v1
+```
+
+## قراردادها
+
+- درخواست‌ها و پاسخ‌ها با قالب JSON مبادله می‌شوند. برای درخواست‌های دارای بدنه، هدر `Content-Type: application/json` را بفرستید.
+- فیلترهای فهرست‌ها با الگوی `search[field]` ارسال می‌شوند، مثلاً `search[order_status]=confirmed`.
+- فیلترهای چندمقداری به‌صورت فهرست جداشده با کاما ارسال می‌شوند.
+- مسیرها با `/` پایانی تعریف شده‌اند.
+
+## منابع
+
+<CardGroup cols={3}>
+  <Card title="سفارش‌ها" icon="cart-shopping" href="/api-reference/orders">
+    فهرست، مشاهده و لغو.
+  </Card>
+
+  <Card title="تنوع‌ها" icon="tags" href="/api-reference/variants">
+    فهرست، مشاهده و به‌روزرسانی.
+  </Card>
+
+  <Card title="پروفایل" icon="user" href="/api-reference/profile">
+    پروفایل و تعطیلات.
+  </Card>
+</CardGroup>
+
+<Info>
+  این مرجع بر پایه مجموعه Postman عمومی دیجی‌کالا (Marketplace API documents) نوشته شده است. نسخه جدیدتر Open API در [مستندات Swagger دیجی‌کالا](https://seller.digikala.com/open-api/v1/doc/#/) ممکن است اندپوینت‌های بیشتری داشته باشد.
+</Info>

@@ -1,0 +1,57 @@
+---
+title: "پروفایل و تعطیلات فروشنده در API فروشندگان دیجی‌کالا"
+sidebarTitle: "پروفایل"
+description: "اندپوینت‌های پروفایل در API فروشندگان دیجی‌کالا برای دریافت اطلاعات حساب فروشنده، فهرست تعطیلات و تقویم تعطیلات و تعهدات سفارش به تاریخ شمسی."
+---
+
+اندپوینت‌های پروفایل در API فروشندگان دیجی‌کالا اطلاعات حساب فروشنده و تعطیلات ثبت‌شده او را برمی‌گردانند. اندپوینت پروفایل ساده‌ترین راه برای آزمایش صحت کلید API است.
+
+## پروفایل فروشنده
+
+```http
+GET https://seller.digikala.com/api/v1/profile/
+```
+
+جزئیات پروفایل فروشنده را برمی‌گرداند. پارامتری ندارد.
+
+```bash
+curl "https://seller.digikala.com/api/v1/profile/" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+## فهرست تعطیلات فروشنده
+
+```http
+GET https://seller.digikala.com/api/v1/profile/holidays/
+```
+
+<ParamField query="search[filter]" type="string">
+  یکی از مقادیر `ahead_holidays` (پیش رو)، `past_holidays` (گذشته) یا `removed_holidays` (حذف‌شده).
+</ParamField>
+
+```bash
+curl -G "https://seller.digikala.com/api/v1/profile/holidays/" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  --data-urlencode "search[filter]=ahead_holidays"
+```
+
+## تقویم تعطیلات فروشنده
+
+```http
+GET https://seller.digikala.com/api/v1/profile/holidays/calendar/
+```
+
+تعطیلات فروشنده و تعهدات سفارش را روی تقویم یک ماه نمایش می‌دهد.
+
+<ParamField query="year" type="integer" required>
+  سال شمسی، مثلاً `1400`.
+</ParamField>
+
+<ParamField query="month" type="integer" required>
+  ماه شمسی (۱ تا ۱۲).
+</ParamField>
+
+```bash
+curl "https://seller.digikala.com/api/v1/profile/holidays/calendar/?year=1400&month=6" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```

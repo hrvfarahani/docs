@@ -1,0 +1,170 @@
+---
+title: "تنوع‌ها در API فروشندگان دیجی‌کالا: قیمت، موجودی و وضعیت"
+sidebarTitle: "تنوع‌ها"
+description: "اندپوینت‌های تنوع کالا در API فروشندگان دیجی‌کالا برای جستجوی تنوع‌ها، مشاهده جزئیات و به‌روزرسانی قیمت، موجودی، زمان ارسال و وضعیت فعال بودن."
+---
+
+تنوع (Variant) در دیجی‌کالا هر نسخه قابل فروش از یک کالاست که قیمت و موجودی مستقل دارد. با این اندپوینت‌ها می‌توانید تنوع‌های خود را جستجو کنید و قیمت و موجودی آن‌ها را به‌صورت خودکار به‌روز نگه دارید.
+
+## فهرست تنوع‌ها
+
+```http
+GET https://seller.digikala.com/api/v1/variants/
+```
+
+فهرست تنوع‌های فروشنده را برمی‌گرداند. همه پارامترها اختیاری هستند.
+
+<ParamField query="search[id]" type="integer">
+  شناسه تنوع.
+</ParamField>
+
+<ParamField query="search[product_id]" type="integer">
+  شناسه کالا.
+</ParamField>
+
+<ParamField query="search[category_ids]" type="string">
+  فهرست شناسه دسته‌بندی‌ها، جداشده با کاما.
+</ParamField>
+
+<ParamField query="search[brand_ids]" type="string">
+  فهرست شناسه برندها، جداشده با کاما.
+</ParamField>
+
+<ParamField query="search[has_warehouse_stock]" type="boolean">
+  دارای موجودی در انبار دیجی‌کالا.
+</ParamField>
+
+<ParamField query="search[shipping_type]" type="string">
+  نوع ارسال.
+</ParamField>
+
+<ParamField query="search[is_active]" type="boolean">
+  فعال بودن تنوع.
+</ParamField>
+
+<ParamField query="search[is_archived]" type="boolean">
+  بایگانی شدن تنوع.
+</ParamField>
+
+<ParamField query="search[is_buy_box_winner]" type="boolean">
+  برنده بای‌باکس بودن.
+</ParamField>
+
+<ParamField query="search[is_in_promotion]" type="boolean">
+  حضور در پروموشن.
+</ParamField>
+
+<ParamField query="search[is_in_competition]" type="boolean">
+  حضور در رقابت.
+</ParamField>
+
+<ParamField query="search[supplier_code]" type="string">
+  کد تأمین‌کننده.
+</ParamField>
+
+<ParamField query="search[active_b2b]" type="boolean">
+  فعال بودن فروش B2B.
+</ParamField>
+
+```bash
+curl -G "https://seller.digikala.com/api/v1/variants/" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  --data-urlencode "search[is_active]=1"
+```
+
+## مشاهده تنوع
+
+```http
+GET https://seller.digikala.com/api/v1/variants/{variant_id}/
+```
+
+جزئیات کامل یک تنوع را برمی‌گرداند.
+
+<ParamField path="variant_id" type="integer" required>
+  شناسه تنوع.
+</ParamField>
+
+## به‌روزرسانی تنوع
+
+```http
+PUT https://seller.digikala.com/api/v1/variants/{variant_id}/
+```
+
+قیمت، موجودی و تنظیمات ارسال یک تنوع را به‌روز می‌کند.
+
+<ParamField path="variant_id" type="integer" required>
+  شناسه تنوع.
+</ParamField>
+
+<ParamField body="site" type="string">
+  سایت فروش، مثلاً `digikala`.
+</ParamField>
+
+<ParamField body="shipping_type" type="string">
+  نوع ارسال: `digikala`، `seller` یا `both`.
+</ParamField>
+
+<ParamField body="seller_stock" type="integer">
+  موجودی نزد فروشنده.
+</ParamField>
+
+<ParamField body="max_per_order" type="integer">
+  حداکثر تعداد در هر سفارش.
+</ParamField>
+
+<ParamField body="digikala_lead_time" type="integer">
+  زمان آماده‌سازی برای ارسال توسط دیجی‌کالا.
+</ParamField>
+
+<ParamField body="ship_by_seller_lead_time" type="integer">
+  زمان آماده‌سازی برای ارسال توسط فروشنده.
+</ParamField>
+
+<ParamField body="is_archived" type="boolean">
+  بایگانی شدن تنوع.
+</ParamField>
+
+<ParamField body="is_active" type="boolean">
+  فعال بودن تنوع.
+</ParamField>
+
+<ParamField body="price" type="integer">
+  قیمت فروش. برای کالاهای طلا از این فیلد استفاده نکنید.
+</ParamField>
+
+<ParamField body="gold_wage" type="number">
+  اجرت طلا (فقط کالاهای طلا).
+</ParamField>
+
+<ParamField body="non_gold_parts_cost" type="number">
+  هزینه قطعات غیرطلا (فقط کالاهای طلا).
+</ParamField>
+
+<ParamField body="non_gold_parts_wage" type="number">
+  اجرت قطعات غیرطلا (فقط کالاهای طلا).
+</ParamField>
+
+<ParamField body="gold_profit" type="number">
+  سود طلا (فقط کالاهای طلا).
+</ParamField>
+
+<Warning>
+  پارامترهای طلا و `price` را با هم ارسال نکنید. برای کالاهای طلا قیمت را با پارامترهای طلا و برای سایر کالاها با `price` تعیین کنید.
+</Warning>
+
+```bash
+curl -X PUT "https://seller.digikala.com/api/v1/variants/VARIANT_ID/" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "site": "digikala",
+    "shipping_type": "both",
+    "seller_stock": 10,
+    "max_per_order": 10,
+    "digikala_lead_time": 2,
+    "ship_by_seller_lead_time": 48,
+    "is_archived": false,
+    "is_active": true,
+    "price": 12000
+  }'
+```

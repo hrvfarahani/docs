@@ -1,0 +1,33 @@
+---
+title: "GET /generate_key: ساخت کلید احراز هویت گلدن سیستمز"
+sidebarTitle: "GET /generate_key"
+description: "GET /generate_key رمز احراز هویت API گلدن سیستمز را می‌سازد. با کلید random_key و مقدار خالی فراخوانی می‌شود و رمز آن برای سرویس export_to_xml لازم است."
+---
+
+سرویس `generate_key` در API گلدن سیستمز رمزی می‌سازد که برای فراخوانی سرویس [Export to XML](/golden-systems/export-to-xml) به آن نیاز دارید. این فراخوانی بدنه و پارامتر ندارد.
+
+## درخواست
+
+| مورد | مقدار |
+| --- | --- |
+| آدرس پایه | `https://x3.gse.ae:5005` |
+| مسیر | `/generate_key` |
+| متد | `GET` |
+
+```text مثال
+https://x3.gse.ae:5005/generate_key
+```
+
+## احراز هویت
+
+| نوع احراز هویت | کلید (Key) | مقدار (Password) |
+| --- | --- | --- |
+| API Key | `random_key` | خالی |
+
+<Note>
+  مقدار رمز باید خالی بماند، چون هدف این فراخوانی ساخت رمز است.
+</Note>
+
+## مرحله بعد
+
+رمز دریافتی را **دقیقاً همان‌طور که هست** کپی کنید و به‌عنوان مقدار کلید `AuthKey` در سرویس [Export to XML](/golden-systems/export-to-xml) استفاده کنید.
